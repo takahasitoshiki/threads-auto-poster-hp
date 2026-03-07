@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#333333"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="248" fill="url(#bg)"/>
+  <!-- Threads-inspired @ symbol -->
+  <g transform="translate(256,248)" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer circle -->
+    <circle cx="0" cy="0" r="110" />
+    <!-- Inner arc (threads-like curl) -->
+    <path d="M 40,-20 A 50,50 0 1,0 40,50 Q 60,30 40,-20" />
+    <!-- Small connecting curve -->
+    <path d="M 40,50 Q 80,60 90,20" />
+  </g>
+  <!-- Calendar icon (bottom-right) -->
+  <g transform="translate(370,370)">
+    <rect x="0" y="0" width="80" height="72" rx="10" fill="#0a7cff"/>
+    <rect x="0" y="0" width="80" height="22" rx="10" fill="#0858b3"/>
+    <rect x="0" y="12" width="80" height="10" fill="#0858b3"/>
+    <!-- Calendar dots -->
+    <circle cx="24" cy="40" r="5" fill="#ffffff"/>
+    <circle cx="40" cy="40" r="5" fill="#ffffff"/>
+    <circle cx="56" cy="40" r="5" fill="#ffffff"/>
+    <circle cx="24" cy="56" r="5" fill="#ffffff"/>
+    <circle cx="40" cy="56" r="5" fill="#ffffff"/>
+  </g>
+</svg>
