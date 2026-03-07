@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Threads Auto Poster — Google カレンダーから Threads へ自動投稿</title>
-  <link rel="icon" href="logo.svg" type="image/svg+xml">
   <meta name="description" content="Google カレンダーの予定から Meta Threads へ自動投稿する無料の Google Workspace Add-on。予約投稿・画像/動画対応・トークン自動管理。">
   <style>
     :root {
@@ -60,15 +59,6 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-    .hero-sub-link {
-      display: block;
-      margin-top: 1.2rem;
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-    .hero-sub-link:hover { color: #ffffff; text-decoration: underline; }
     .btn {
       display: inline-block;
       padding: 0.8rem 2rem;
@@ -182,28 +172,6 @@
       text-decoration: none;
     }
     .btn-cta:hover { opacity: 0.9; }
-    .manual-banner {
-      background: var(--section-bg);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .manual-banner p {
-      color: var(--muted);
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-    }
-    .btn-manual-sub {
-      display: inline-block;
-      margin-top: 0.8rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-    .btn-manual-sub:hover { text-decoration: underline; }
 
     .pricing {
       display: grid;
@@ -272,14 +240,12 @@
 </head>
 <body>
   <div class="hero">
-    <img src="logo.svg" alt="Threads Auto Poster" width="96" height="96" style="margin-bottom: 1rem;">
     <h1>Threads Auto Poster</h1>
     <p>Google カレンダーに予定を作るだけで、Threads に自動投稿。無料で使えるスケジュール投稿ツール。</p>
     <div class="hero-buttons">
-      <a href="https://github.com/takahasitoshiki/postThreads" class="btn btn-primary">GitHub で入手（無料）</a>
-      <a href="#setup-service" class="btn btn-secondary">セットアップ代行を依頼</a>
+      <a href="https://github.com/takahasitoshiki/threads-calendar-addon" class="btn btn-primary">GitHub で入手（無料）</a>
+      <a href="manual.html" class="btn btn-secondary">セットアップマニュアル</a>
     </div>
-    <a href="manual.html" class="hero-sub-link">セットアップマニュアルはこちら &rarr;</a>
   </div>
 
   <div class="container">
@@ -325,17 +291,12 @@
           <p>予定の時刻になると自動で投稿。結果はカレンダーに反映</p>
         </div>
       </div>
-      <div class="manual-banner">
-        <h3>詳しいセットアップ手順を見る</h3>
-        <p>Meta アプリの作成からトークン取得、GAS のデプロイまで、画面ごとにわかりやすく解説しています。</p>
-        <a href="manual.html" class="btn-cta">マニュアルを開く</a>
-      </div>
     </div>
 
     <div class="section" id="setup-service">
-      <h2>プラン</h2>
+      <h2>はじめ方</h2>
       <div class="pricing">
-        <div class="price-card">
+        <div class="price-card featured">
           <h4>セルフセットアップ</h4>
           <div class="price">無料</div>
           <ul>
@@ -344,20 +305,8 @@
             <li>セットアップガイド付き</li>
             <li>コミュニティサポート</li>
           </ul>
-          <a href="https://github.com/takahasitoshiki/postThreads" class="btn-cta">GitHub で入手</a>
-          <br><a href="manual.html" class="btn-manual-sub">セットアップマニュアル &rarr;</a>
-        </div>
-        <div class="price-card featured">
-          <h4>セットアップ代行</h4>
-          <div class="price">¥5,000 <small>（税込）</small></div>
-          <ul>
-            <li>全機能利用可能</li>
-            <li>Meta アプリ作成サポート</li>
-            <li>トークン取得・設定代行</li>
-            <li>動作確認まで完了</li>
-            <li>30分のオンラインサポート</li>
-          </ul>
-          <a href="https://coconala.com/" class="btn-cta">代行を依頼する</a>
+          <a href="https://github.com/takahasitoshiki/threads-calendar-addon" class="btn-cta">GitHub で入手</a>
+          <p style="margin-top: 0.8rem; font-size: 0.85rem;"><a href="manual.html" style="color: var(--accent);">セットアップマニュアルはこちら</a></p>
         </div>
       </div>
     </div>
@@ -386,11 +335,10 @@
   <footer>
     <p>&copy; 2026 Threads Auto Poster. All rights reserved.</p>
     <div class="links">
-      <a href="manual.html">マニュアル</a> ·
       <a href="privacy-policy.html">プライバシーポリシー</a> ·
       <a href="terms-of-service.html">利用規約</a> ·
       <a href="data-deletion.html">データ削除</a> ·
-      <a href="https://github.com/takahasitoshiki/postThreads">GitHub</a>
+      <a href="https://github.com/takahasitoshiki/threads-calendar-addon">GitHub</a>
     </div>
   </footer>
 </body>
