@@ -59,6 +59,15 @@
       justify-content: center;
       flex-wrap: wrap;
     }
+    .hero-sub-link {
+      display: block;
+      margin-top: 1.2rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .hero-sub-link:hover { color: #ffffff; text-decoration: underline; }
     .btn {
       display: inline-block;
       padding: 0.8rem 2rem;
@@ -172,6 +181,28 @@
       text-decoration: none;
     }
     .btn-cta:hover { opacity: 0.9; }
+    .manual-banner {
+      background: var(--section-bg);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .manual-banner p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .btn-manual-sub {
+      display: inline-block;
+      margin-top: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .btn-manual-sub:hover { text-decoration: underline; }
 
     .pricing {
       display: grid;
@@ -246,6 +277,7 @@
       <a href="https://github.com/takahasitoshiki/postThreads" class="btn btn-primary">GitHub で入手（無料）</a>
       <a href="#setup-service" class="btn btn-secondary">セットアップ代行を依頼</a>
     </div>
+    <a href="manual.html" class="hero-sub-link">セットアップマニュアルはこちら &rarr;</a>
   </div>
 
   <div class="container">
@@ -291,6 +323,11 @@
           <p>予定の時刻になると自動で投稿。結果はカレンダーに反映</p>
         </div>
       </div>
+      <div class="manual-banner">
+        <h3>詳しいセットアップ手順を見る</h3>
+        <p>Meta アプリの作成からトークン取得、GAS のデプロイまで、画面ごとにわかりやすく解説しています。</p>
+        <a href="manual.html" class="btn-cta">マニュアルを開く</a>
+      </div>
     </div>
 
     <div class="section" id="setup-service">
@@ -306,6 +343,7 @@
             <li>コミュニティサポート</li>
           </ul>
           <a href="https://github.com/takahasitoshiki/postThreads" class="btn-cta">GitHub で入手</a>
+          <br><a href="manual.html" class="btn-manual-sub">セットアップマニュアル &rarr;</a>
         </div>
         <div class="price-card featured">
           <h4>セットアップ代行</h4>
