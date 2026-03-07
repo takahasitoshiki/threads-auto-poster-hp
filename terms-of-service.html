@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service / 利用規約 — Threads Auto Poster</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555555;
+      --border: #e0e0e0;
+      --accent: #0a7cff;
+      --section-bg: #f8f9fa;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --text: #e8e8e8;
+        --muted: #aaaaaa;
+        --border: #333333;
+        --accent: #4da6ff;
+        --section-bg: #222222;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .last-updated {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .lang-nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .lang-nav a:hover { text-decoration: underline; }
+    section {
+      margin-bottom: 2.5rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    p, li {
+      margin-bottom: 0.6rem;
+    }
+    ul, ol {
+      padding-left: 1.5rem;
+    }
+    .divider {
+      border: none;
+      border-top: 3px solid var(--accent);
+      margin: 3rem 0;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Home</a>
+
+    <h1>Terms of Service / 利用規約</h1>
+    <p class="last-updated">Last updated / 最終更新: 2026-03-05</p>
+
+    <nav class="lang-nav">
+      <a href="#ja">日本語</a>
+      <a href="#en">English</a>
+    </nav>
+
+    <!-- ======================== 日本語 ======================== -->
+    <div id="ja">
+      <h2>利用規約</h2>
+
+      <section>
+        <h3>1. サービスの概要</h3>
+        <p>Threads Auto Poster（以下「本サービス」）は、Google カレンダーの予定を Meta Threads へ自動投稿する Google Workspace Add-on です。ユーザーはカレンダーに予定を作成するだけで、指定した日時に Threads への投稿を自動的に行うことができます。</p>
+      </section>
+
+      <section>
+        <h3>2. 利用条件</h3>
+        <p>本サービスを利用するには、以下の条件を満たす必要があります:</p>
+        <ul>
+          <li>Google アカウントを保有していること</li>
+          <li>Meta Threads アカウントを保有していること</li>
+          <li>Meta for Developers で Threads API のアクセストークンを取得していること</li>
+          <li>本利用規約および<a href="privacy-policy.html">プライバシーポリシー</a>に同意すること</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>3. 免責事項</h3>
+        <p>本サービスは「現状有姿」で提供され、以下の事項について一切の保証をいたしません:</p>
+        <ul>
+          <li>Threads API または Google Calendar API の可用性・安定性</li>
+          <li>投稿の遅延、失敗、または意図しないタイミングでの投稿</li>
+          <li>API の仕様変更に伴うサービスの中断</li>
+          <li>Google Apps Script の時間トリガーの精度（±15分の誤差が生じる場合があります）</li>
+          <li>アクセストークンの期限切れによる投稿失敗</li>
+        </ul>
+        <p>本サービスの利用により生じたいかなる損害についても、開発者は責任を負いません。</p>
+      </section>
+
+      <section>
+        <h3>4. 禁止事項</h3>
+        <p>ユーザーは以下の行為を行ってはなりません:</p>
+        <ul>
+          <li>スパム投稿、大量の自動投稿など、Threads のコミュニティガイドラインに違反する行為</li>
+          <li>Threads API のレート制限（24時間あたり250投稿）を意図的に超過する行為</li>
+          <li>本サービスを利用した違法なコンテンツの投稿</li>
+          <li>他者のアクセストークンやアカウントを不正に使用する行為</li>
+          <li>本サービスのソースコードを改変し、悪意のある目的で利用する行為</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>5. サービスの停止・終了</h3>
+        <ul>
+          <li>開発者は、事前の通知なくサービスの提供を停止・終了する場合があります</li>
+          <li>禁止事項に違反したユーザーに対しては、サービスの利用を制限する場合があります</li>
+          <li>ユーザーはいつでも Add-on をアンインストールしてサービスの利用を終了できます</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>6. 知的財産権</h3>
+        <p>本サービスのソースコードは MIT ライセンスに基づき公開されています。MIT ライセンスの条件に従い、自由にご利用いただけます。</p>
+      </section>
+
+      <section>
+        <h3>7. 規約の変更</h3>
+        <p>本規約は、事前の通知なく変更される場合があります。変更後の規約は、本ページに掲載された時点で効力を生じます。</p>
+      </section>
+
+      <section>
+        <h3>8. 準拠法</h3>
+        <p>本規約は日本法に準拠するものとします。</p>
+      </section>
+
+      <section>
+        <h3>9. お問い合わせ</h3>
+        <p>本規約に関するご質問は、以下までご連絡ください:</p>
+        <p>メール: <a href="mailto:[YOUR_EMAIL]">[YOUR_EMAIL]</a></p>
+      </section>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ======================== English ======================== -->
+    <div id="en">
+      <h2>Terms of Service</h2>
+
+      <section>
+        <h3>1. Service Overview</h3>
+        <p>Threads Auto Poster (the "Service") is a Google Workspace Add-on that automatically posts Google Calendar events to Meta Threads. Users can schedule posts to Threads simply by creating events in their calendar.</p>
+      </section>
+
+      <section>
+        <h3>2. Requirements</h3>
+        <p>To use the Service, you must:</p>
+        <ul>
+          <li>Have a Google account</li>
+          <li>Have a Meta Threads account</li>
+          <li>Obtain a Threads API access token from Meta for Developers</li>
+          <li>Agree to these Terms of Service and the <a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>3. Disclaimer</h3>
+        <p>The Service is provided "as is" without warranties of any kind, including but not limited to:</p>
+        <ul>
+          <li>Availability or stability of the Threads API or Google Calendar API</li>
+          <li>Delays, failures, or unintended timing of posts</li>
+          <li>Service interruptions due to API specification changes</li>
+          <li>Accuracy of Google Apps Script time triggers (may vary by up to ±15 minutes)</li>
+          <li>Post failures due to expired access tokens</li>
+        </ul>
+        <p>The developer shall not be liable for any damages arising from the use of the Service.</p>
+      </section>
+
+      <section>
+        <h3>4. Prohibited Activities</h3>
+        <p>Users must not:</p>
+        <ul>
+          <li>Engage in spam posting or mass automated posting that violates Threads Community Guidelines</li>
+          <li>Intentionally exceed Threads API rate limits (250 posts per 24 hours)</li>
+          <li>Post illegal content using the Service</li>
+          <li>Use another person's access token or account without authorization</li>
+          <li>Modify the Service's source code for malicious purposes</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>5. Service Suspension and Termination</h3>
+        <ul>
+          <li>The developer may suspend or terminate the Service without prior notice</li>
+          <li>Users who violate the prohibited activities may have their access restricted</li>
+          <li>Users may terminate their use of the Service at any time by uninstalling the Add-on</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>6. Intellectual Property</h3>
+        <p>The Service's source code is published under the MIT License. You may freely use it in accordance with the terms of the MIT License.</p>
+      </section>
+
+      <section>
+        <h3>7. Changes to These Terms</h3>
+        <p>These Terms may be updated without prior notice. Updated Terms become effective upon posting on this page.</p>
+      </section>
+
+      <section>
+        <h3>8. Governing Law</h3>
+        <p>These Terms shall be governed by the laws of Japan.</p>
+      </section>
+
+      <section>
+        <h3>9. Contact Us</h3>
+        <p>If you have any questions about these Terms, please contact us at:</p>
+        <p>Email: <a href="mailto:[YOUR_EMAIL]">[YOUR_EMAIL]</a></p>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Threads Auto Poster. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

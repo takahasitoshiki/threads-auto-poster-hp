@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Deletion / データ削除 — Threads Auto Poster</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555555;
+      --border: #e0e0e0;
+      --accent: #0a7cff;
+      --section-bg: #f8f9fa;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --text: #e8e8e8;
+        --muted: #aaaaaa;
+        --border: #333333;
+        --accent: #4da6ff;
+        --section-bg: #222222;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .last-updated {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .lang-nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .lang-nav a:hover { text-decoration: underline; }
+    section {
+      margin-bottom: 2.5rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    p, li {
+      margin-bottom: 0.6rem;
+    }
+    ol, ul {
+      padding-left: 1.5rem;
+    }
+    .step-box {
+      background: var(--section-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+    .step-box h4 {
+      margin-bottom: 0.5rem;
+    }
+    .important {
+      background: var(--section-bg);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--section-bg);
+      font-weight: 600;
+    }
+    .divider {
+      border: none;
+      border-top: 3px solid var(--accent);
+      margin: 3rem 0;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Home</a>
+
+    <h1>Data Deletion / データ削除</h1>
+    <p class="last-updated">Last updated / 最終更新: 2026-03-05</p>
+
+    <nav class="lang-nav">
+      <a href="#ja">日本語</a>
+      <a href="#en">English</a>
+    </nav>
+
+    <!-- ======================== 日本語 ======================== -->
+    <div id="ja">
+      <h2>データ削除について</h2>
+
+      <section>
+        <h3>保存されるデータ</h3>
+        <p>Threads Auto Poster は、以下のデータを Google Apps Script UserProperties に保存します:</p>
+        <table>
+          <thead>
+            <tr><th>データ項目</th><th>説明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Threads ユーザーID</td><td>API 呼び出しに使用する数値ID</td></tr>
+            <tr><td>アクセストークン</td><td>Threads API 認証用トークン</td></tr>
+            <tr><td>トークン保存日時</td><td>自動リフレッシュの判定に使用</td></tr>
+            <tr><td>月次投稿カウント</td><td>ダッシュボード表示用の統計</td></tr>
+          </tbody>
+        </table>
+        <div class="important">
+          <p><strong>重要:</strong> 本アプリは独自のサーバーやデータベースを持ちません。すべてのデータは Google のインフラ上（UserProperties）にのみ保存されます。</p>
+        </div>
+      </section>
+
+      <section>
+        <h3>データの削除方法</h3>
+
+        <div class="step-box">
+          <h4>方法 1: Add-on 設定画面から削除（推奨）</h4>
+          <ol>
+            <li>Google カレンダーを開く</li>
+            <li>右サイドバーの Threads Auto Poster アイコンをクリック</li>
+            <li>「設定」を開く</li>
+            <li><strong>「接続を解除」</strong>ボタンをクリック</li>
+          </ol>
+          <p>→ ユーザーID、アクセストークン、保存日時、月次統計データ、およびすべてのトリガーが即座に削除されます。</p>
+        </div>
+
+        <div class="step-box">
+          <h4>方法 2: Add-on をアンインストール</h4>
+          <ol>
+            <li>Google カレンダーを開く</li>
+            <li>右サイドバーの Threads Auto Poster アイコンを右クリック</li>
+            <li>「アンインストール」を選択</li>
+          </ol>
+          <p>→ Add-on に関連するすべての UserProperties とトリガーが Google によって削除されます。</p>
+        </div>
+
+        <div class="step-box">
+          <h4>方法 3: メールでの削除リクエスト</h4>
+          <p>上記の方法で削除できない場合は、以下のメールアドレスにご連絡ください:</p>
+          <p><a href="mailto:[YOUR_EMAIL]">[YOUR_EMAIL]</a></p>
+          <p>件名に「データ削除リクエスト」と記載し、ご利用の Google アカウントのメールアドレスをお知らせください。</p>
+        </div>
+      </section>
+
+      <section>
+        <h3>削除の確認</h3>
+        <p>「接続を解除」を実行した後、再度 Add-on を開くと初期設定画面が表示されます。これにより、すべてのデータが削除されたことを確認できます。</p>
+      </section>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ======================== English ======================== -->
+    <div id="en">
+      <h2>Data Deletion</h2>
+
+      <section>
+        <h3>Data We Store</h3>
+        <p>Threads Auto Poster stores the following data in Google Apps Script UserProperties:</p>
+        <table>
+          <thead>
+            <tr><th>Data</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Threads User ID</td><td>Numeric ID used for API calls</td></tr>
+            <tr><td>Access Token</td><td>Token for Threads API authentication</td></tr>
+            <tr><td>Token Save Timestamp</td><td>Used for automatic refresh scheduling</td></tr>
+            <tr><td>Monthly Post Count</td><td>Statistics for dashboard display</td></tr>
+          </tbody>
+        </table>
+        <div class="important">
+          <p><strong>Important:</strong> This app does not operate its own servers or databases. All data is stored exclusively on Google's infrastructure (UserProperties).</p>
+        </div>
+      </section>
+
+      <section>
+        <h3>How to Delete Your Data</h3>
+
+        <div class="step-box">
+          <h4>Method 1: Disconnect from Add-on Settings (Recommended)</h4>
+          <ol>
+            <li>Open Google Calendar</li>
+            <li>Click the Threads Auto Poster icon in the right sidebar</li>
+            <li>Open "Settings"</li>
+            <li>Click the <strong>"Disconnect"</strong> button</li>
+          </ol>
+          <p>→ Your User ID, access token, save timestamp, monthly statistics, and all triggers are immediately deleted.</p>
+        </div>
+
+        <div class="step-box">
+          <h4>Method 2: Uninstall the Add-on</h4>
+          <ol>
+            <li>Open Google Calendar</li>
+            <li>Right-click the Threads Auto Poster icon in the right sidebar</li>
+            <li>Select "Uninstall"</li>
+          </ol>
+          <p>→ All UserProperties and triggers associated with the Add-on are deleted by Google.</p>
+        </div>
+
+        <div class="step-box">
+          <h4>Method 3: Email Deletion Request</h4>
+          <p>If you are unable to delete your data using the methods above, please contact us at:</p>
+          <p><a href="mailto:[YOUR_EMAIL]">[YOUR_EMAIL]</a></p>
+          <p>Include "Data Deletion Request" in the subject line and provide the email address of your Google account.</p>
+        </div>
+      </section>
+
+      <section>
+        <h3>Verifying Deletion</h3>
+        <p>After disconnecting, reopen the Add-on. If the initial setup screen appears, all your data has been successfully deleted.</p>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Threads Auto Poster. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
