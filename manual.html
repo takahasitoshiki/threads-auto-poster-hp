@@ -157,17 +157,6 @@
       font-weight: 600;
     }
 
-    .screenshot-placeholder {
-      background: var(--section-bg);
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      padding: 2rem;
-      text-align: center;
-      color: var(--muted);
-      margin: 1rem 0;
-      font-size: 0.9rem;
-    }
-
     .flow-diagram {
       display: flex;
       align-items: center;
@@ -209,6 +198,40 @@
       margin-bottom: 0;
     }
 
+    .method-tabs {
+      display: flex;
+      gap: 0;
+      margin-top: 1rem;
+    }
+    .method-tab {
+      flex: 1;
+      padding: 0.8rem;
+      text-align: center;
+      font-weight: 600;
+      border: 2px solid var(--border);
+      background: var(--section-bg);
+      cursor: default;
+    }
+    .method-tab:first-child {
+      border-radius: 8px 0 0 0;
+      border-right: none;
+    }
+    .method-tab:last-child {
+      border-radius: 0 8px 0 0;
+    }
+    .method-tab.recommended {
+      border-color: var(--accent);
+      background: var(--bg);
+      color: var(--accent);
+    }
+    .method-content {
+      border: 2px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
     footer {
       margin-top: 3rem;
       padding-top: 1.5rem;
@@ -236,10 +259,7 @@
       <ol>
         <li><a href="#overview">全体の流れ</a></li>
         <li><a href="#prerequisites">事前に必要なもの</a></li>
-        <li><a href="#meta-app">Meta アプリの作成</a></li>
-        <li><a href="#token">Threads アクセストークンの取得</a></li>
-        <li><a href="#gas-setup">Google Apps Script のセットアップ</a></li>
-        <li><a href="#addon-setup">Add-on の初期設定</a></li>
+        <li><a href="#addon-setup">Add-on の初期設定（利用者向け）</a></li>
         <li><a href="#calendar">カレンダーの使い方</a></li>
         <li><a href="#post-types">投稿タイプ別ガイド</a></li>
         <li><a href="#token-management">トークン管理</a></li>
@@ -247,6 +267,7 @@
         <li><a href="#troubleshooting">トラブルシューティング</a></li>
         <li><a href="#limits">制限事項</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li><a href="#selfhost">自分でホストする場合（開発者向け）</a></li>
       </ol>
     </div>
 
@@ -256,19 +277,15 @@
       <p>Threads Auto Poster の仕組みは非常にシンプルです。Google カレンダーに予定を作成すると、その時刻に Threads へ自動で投稿されます。</p>
 
       <div class="flow-diagram">
-        <div class="flow-item">Meta アプリ作成</div>
+        <div class="flow-item">Add-on をインストール</div>
         <div class="flow-arrow">&rarr;</div>
-        <div class="flow-item">トークン取得</div>
+        <div class="flow-item">Threads アカウントを連携</div>
         <div class="flow-arrow">&rarr;</div>
-        <div class="flow-item">GAS セットアップ</div>
-        <div class="flow-arrow">&rarr;</div>
-        <div class="flow-item">Add-on 設定</div>
-        <div class="flow-arrow">&rarr;</div>
-        <div class="flow-item">カレンダーで予約</div>
+        <div class="flow-item">カレンダーで予約投稿</div>
       </div>
 
       <div class="important">
-        <p><strong>所要時間の目安:</strong> 初回セットアップは約 30〜60分かかります。一度設定が完了すれば、日常の運用はカレンダーに予定を作成するだけです。</p>
+        <p><strong>所要時間の目安:</strong> 初回セットアップは約 5〜15分です。一度設定が完了すれば、日常の運用はカレンダーに予定を作成するだけです。</p>
       </div>
     </section>
 
@@ -280,148 +297,16 @@
           <tr><th>項目</th><th>説明</th></tr>
         </thead>
         <tbody>
-          <tr><td>Google アカウント</td><td>Google カレンダーと Google Apps Script を使用します</td></tr>
-          <tr><td>Meta（Facebook）アカウント</td><td>Meta Developer に登録するために必要です</td></tr>
+          <tr><td>Google アカウント</td><td>Google カレンダーを使用します</td></tr>
           <tr><td>Threads アカウント</td><td>投稿先となるアカウントです</td></tr>
-          <tr><td>PC のブラウザ</td><td>セットアップ作業は PC から行ってください</td></tr>
+          <tr><td>PC のブラウザ</td><td>初回セットアップは PC から行ってください</td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 3. Meta アプリの作成 -->
-    <section id="meta-app">
-      <h2>3. Meta アプリの作成</h2>
-      <p>Threads API を使用するには、Meta Developer Platform でアプリを作成する必要があります。</p>
-
-      <div class="step-box">
-        <h4>Step 1: Meta Developer に登録</h4>
-        <ol>
-          <li><a href="https://developers.facebook.com/" target="_blank" rel="noopener">Meta for Developers</a> にアクセス</li>
-          <li>Facebook アカウントでログイン</li>
-          <li>開発者アカウントの登録を完了する</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 2: 新しいアプリを作成</h4>
-        <ol>
-          <li>「マイアプリ」→「アプリを作成」をクリック</li>
-          <li>アプリ名を入力（例：<code>Threads Auto Poster</code>）</li>
-          <li>アプリの連絡先メールアドレスを入力</li>
-          <li>ユースケースは「その他」を選択</li>
-          <li>アプリタイプは「ビジネス」を選択</li>
-          <li>「アプリを作成」をクリック</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 3: Threads API を追加</h4>
-        <ol>
-          <li>アプリのダッシュボードを開く</li>
-          <li>「プロダクトを追加」セクションで「Threads API」を見つける</li>
-          <li>「設定」をクリックして追加</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 4: アプリの設定を確認</h4>
-        <ol>
-          <li>左メニューの「アプリの設定」→「ベーシック」を開く</li>
-          <li><strong>アプリ ID</strong> と <strong>app secret</strong> をメモしておく（トークン取得時に使用）</li>
-          <li>「Threads API」→「設定」でリダイレクト URI を設定:
-            <br><code>https://threads.net/</code>（任意の有効な URL）</li>
-        </ol>
-      </div>
-
-      <div class="warning">
-        <p><strong>注意:</strong> app secret は絶対に他人と共有しないでください。漏洩した場合は直ちにリセットしてください。</p>
-      </div>
-    </section>
-
-    <!-- 4. トークン取得 -->
-    <section id="token">
-      <h2>4. Threads アクセストークンの取得</h2>
-      <p>Threads API を利用するには、長期アクセストークンが必要です。以下の手順で取得します。</p>
-
-      <div class="step-box">
-        <h4>Step 1: 短期トークンを取得</h4>
-        <ol>
-          <li>Meta Developer ダッシュボードで「Threads API」→「Threads API explorer」を開く</li>
-          <li>「Generate Token」ボタンをクリック</li>
-          <li>Threads アカウントでログインし、アクセスを許可</li>
-          <li>表示された<strong>短期トークン</strong>をコピー</li>
-        </ol>
-        <div class="important">
-          <p><strong>注意:</strong> 短期トークンの有効期限は 1時間です。次のステップをすぐに実行してください。</p>
-        </div>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 2: 長期トークンに交換</h4>
-        <p>ブラウザのアドレスバーに以下の URL を入力して開きます（各値を置き換えてください）:</p>
-        <p style="word-break: break-all;"><code>https://graph.threads.net/access_token?grant_type=th_exchange_token&amp;client_secret={APP_SECRET}&amp;access_token={SHORT_LIVED_TOKEN}</code></p>
-        <ul>
-          <li><code>{APP_SECRET}</code> → Step 3-4 でメモした app secret</li>
-          <li><code>{SHORT_LIVED_TOKEN}</code> → Step 1 で取得した短期トークン</li>
-        </ul>
-        <p>JSON レスポンスに含まれる <code>access_token</code> の値が長期トークン（有効期限 60日）です。</p>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 3: ユーザー ID を確認</h4>
-        <p>長期トークンを使って以下の URL にアクセスします:</p>
-        <p style="word-break: break-all;"><code>https://graph.threads.net/v1.0/me?access_token={LONG_LIVED_TOKEN}</code></p>
-        <p>レスポンスに含まれる <code>id</code> の値がユーザー ID です。メモしておきます。</p>
-      </div>
-
-      <div class="tip">
-        <p><strong>ヒント:</strong> トークンとユーザー ID は Add-on の初期設定で入力します。安全な場所に保管してください。</p>
-      </div>
-    </section>
-
-    <!-- 5. GAS セットアップ -->
-    <section id="gas-setup">
-      <h2>5. Google Apps Script のセットアップ</h2>
-
-      <div class="step-box">
-        <h4>Step 1: リポジトリからコードを取得</h4>
-        <ol>
-          <li><a href="https://github.com/takahasitoshiki/postThreads" target="_blank" rel="noopener">GitHub リポジトリ</a> にアクセス</li>
-          <li>コードをダウンロードまたはクローン</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 2: Google Apps Script プロジェクトを作成</h4>
-        <ol>
-          <li><a href="https://script.google.com/" target="_blank" rel="noopener">Google Apps Script</a> にアクセス</li>
-          <li>「新しいプロジェクト」をクリック</li>
-          <li>プロジェクト名を <code>Threads Auto Poster</code> に変更</li>
-          <li>GitHub から取得したコードファイルをコピー＆ペースト</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 3: デプロイ</h4>
-        <ol>
-          <li>「デプロイ」→「新しいデプロイ」をクリック</li>
-          <li>種類は「アドオン」を選択</li>
-          <li>必要な情報を入力し、デプロイを実行</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>Step 4: テスト実行</h4>
-        <ol>
-          <li>「デプロイ」→「デプロイをテスト」をクリック</li>
-          <li>Google カレンダーが開き、Add-on のテスト版がインストールされます</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- 6. Add-on の初期設定 -->
+    <!-- 3. Add-on の初期設定 -->
     <section id="addon-setup">
-      <h2>6. Add-on の初期設定</h2>
+      <h2>3. Add-on の初期設定</h2>
 
       <div class="step-box">
         <h4>Step 1: Add-on を開く</h4>
@@ -429,17 +314,44 @@
           <li>Google カレンダーを開く</li>
           <li>右サイドバーに Threads Auto Poster のアイコンが表示される</li>
           <li>アイコンをクリックして Add-on パネルを開く</li>
+          <li>初回は Google アカウントへのアクセス許可が求められるので「許可」をクリック</li>
         </ol>
       </div>
 
       <div class="step-box">
-        <h4>Step 2: トークンを設定</h4>
-        <ol>
-          <li>「接続する」または「設定」画面を開く</li>
-          <li><strong>ユーザー ID</strong>（Section 4 の Step 3 で取得した値）を入力</li>
-          <li><strong>アクセストークン</strong>（Section 4 の Step 2 で取得した長期トークン）を入力</li>
-          <li>「保存」をクリック</li>
-        </ol>
+        <h4>Step 2: Threads アカウントを連携</h4>
+        <p>連携方法は 2 つあります。</p>
+
+        <div class="method-tabs">
+          <div class="method-tab recommended">方法 A: OAuth ログイン（おすすめ）</div>
+          <div class="method-tab">方法 B: トークン入力</div>
+        </div>
+        <div class="method-content">
+          <h4 style="color: var(--accent); margin-bottom: 0.5rem;">方法 A: OAuth ログイン（おすすめ）</h4>
+          <ol>
+            <li>「🔗 Threads でログイン」ボタンをクリック</li>
+            <li>Threads のログイン画面が表示されるので、アカウントでログイン</li>
+            <li>アクセス許可を確認し「許可する」をクリック</li>
+            <li>「認証が完了しました！」と表示されたらウィンドウを閉じる</li>
+            <li>Add-on パネルが自動的に更新され、接続済みになる</li>
+          </ol>
+          <div class="tip">
+            <p><strong>ヒント:</strong> OAuth ログインはボタン1回で完了します。トークンの取得や入力は一切不要です。</p>
+          </div>
+
+          <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border);">
+
+          <h4 style="margin-bottom: 0.5rem;">方法 B: トークンを手動入力</h4>
+          <p>OAuth ログインが使えない場合は、アクセストークンを直接入力できます。</p>
+          <ol>
+            <li>Meta Developer Console でアクセストークンを取得（<a href="#selfhost-token">トークン取得の詳細手順</a>）</li>
+            <li>Add-on の「トークンで連携」セクションにアクセストークンを貼り付け</li>
+            <li>「保存して接続」をクリック</li>
+          </ol>
+          <div class="important">
+            <p><strong>ポイント:</strong> ユーザー ID の入力は不要です。アクセストークンから自動的にユーザー ID が取得されます。</p>
+          </div>
+        </div>
       </div>
 
       <div class="step-box">
@@ -455,16 +367,16 @@
             <tr><th>トリガー</th><th>機能</th><th>間隔</th></tr>
           </thead>
           <tbody>
-            <tr><td>投稿チェック</td><td>カレンダーの予定を確認し、投稿を実行</td><td>定期的</td></tr>
-            <tr><td>トークンリフレッシュ</td><td>アクセストークンを自動更新</td><td>45日ごと</td></tr>
+            <tr><td>投稿チェック</td><td>カレンダーの予定を確認し、投稿を実行</td><td>1時間ごと</td></tr>
+            <tr><td>トークンリフレッシュ</td><td>アクセストークンを自動更新</td><td>毎週月曜 9時</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- 7. カレンダーの使い方 -->
+    <!-- 4. カレンダーの使い方 -->
     <section id="calendar">
-      <h2>7. カレンダーの使い方</h2>
+      <h2>4. カレンダーの使い方</h2>
 
       <h3>基本的な操作</h3>
       <ol>
@@ -487,7 +399,7 @@
         <tbody>
           <tr><td>タイトル</td><td>投稿テキスト（Threads に表示されるテキスト）</td></tr>
           <tr><td>開始時刻</td><td>投稿が実行される時刻</td></tr>
-          <tr><td>説明欄</td><td>メディア URL（画像・動画を添付する場合）</td></tr>
+          <tr><td>説明欄</td><td>メディア URL や返信設定（オプション）</td></tr>
         </tbody>
       </table>
 
@@ -496,9 +408,9 @@
       </div>
     </section>
 
-    <!-- 8. 投稿タイプ別ガイド -->
+    <!-- 5. 投稿タイプ別ガイド -->
     <section id="post-types">
-      <h2>8. 投稿タイプ別ガイド</h2>
+      <h2>5. 投稿タイプ別ガイド</h2>
 
       <div class="step-box">
         <h4>テキストのみの投稿</h4>
@@ -513,11 +425,10 @@
         <h4>画像付き投稿</h4>
         <ul>
           <li><strong>タイトル:</strong> 投稿テキスト</li>
-          <li><strong>説明欄:</strong> 画像の URL を記入</li>
+          <li><strong>説明欄:</strong> <code>#image: https://example.com/photo.jpg</code></li>
         </ul>
-        <p>例: 説明欄に <code>https://example.com/photo.jpg</code> と入力</p>
         <div class="warning">
-          <p><strong>注意:</strong> 画像 URL はインターネットから直接アクセス可能な URL である必要があります。Google ドライブの限定共有リンクなどは使用できません。</p>
+          <p><strong>注意:</strong> 画像 URL はインターネットから直接アクセス可能な https:// の URL である必要があります。Google ドライブの限定共有リンクなどは使用できません。</p>
         </div>
       </div>
 
@@ -525,12 +436,21 @@
         <h4>動画付き投稿</h4>
         <ul>
           <li><strong>タイトル:</strong> 投稿テキスト</li>
-          <li><strong>説明欄:</strong> 動画の URL を記入</li>
+          <li><strong>説明欄:</strong> <code>#video: https://example.com/video.mp4</code></li>
         </ul>
-        <p>動画は自動的に判定されます。対応形式: MP4, MOV など。</p>
       </div>
 
-      <h3>メディア投稿の注意点</h3>
+      <div class="step-box">
+        <h4>返信コントロール</h4>
+        <p>説明欄に以下を追記することで、返信を制限できます:</p>
+        <ul>
+          <li><code>#reply: everyone</code> — 全員（デフォルト）</li>
+          <li><code>#reply: accounts_you_follow</code> — フォロワーのみ</li>
+          <li><code>#reply: mentioned_only</code> — メンションされた人のみ</li>
+        </ul>
+      </div>
+
+      <h3>メディア投稿の制限</h3>
       <table>
         <thead>
           <tr><th>項目</th><th>制限</th></tr>
@@ -545,9 +465,9 @@
       </table>
     </section>
 
-    <!-- 9. トークン管理 -->
+    <!-- 6. トークン管理 -->
     <section id="token-management">
-      <h2>9. トークン管理</h2>
+      <h2>6. トークン管理</h2>
       <p>Threads のアクセストークンは有効期限が <strong>60日間</strong> です。本ツールでは安全マージンを取って <strong>45日経過時</strong> に自動リフレッシュを行います。</p>
 
       <h3>自動リフレッシュの仕組み</h3>
@@ -561,11 +481,14 @@
         <div class="flow-item">45日後にまた更新…</div>
       </div>
 
+      <h3>手動リフレッシュ</h3>
+      <p>Add-on の設定画面（⚙）から「🔄 トークンをリフレッシュ」ボタンで手動更新もできます。</p>
+
       <h3>トークンが期限切れになった場合</h3>
-      <p>万が一トークンが期限切れになった場合は、メールで通知が届きます。通知を受け取ったら、以下の手順でトークンを再取得してください:</p>
+      <p>万が一トークンが期限切れになった場合は、メールで通知が届きます。通知を受け取ったら:</p>
       <ol>
-        <li><a href="#token">Section 4</a> の手順に従い、新しいトークンを取得</li>
-        <li>Add-on の設定画面を開き、新しいトークンを入力して保存</li>
+        <li>Add-on の設定画面を開き、「接続を解除」をクリック</li>
+        <li>「🔗 Threads でログイン」ボタンで再連携（または新しいトークンを入力）</li>
       </ol>
 
       <div class="tip">
@@ -573,9 +496,9 @@
       </div>
     </section>
 
-    <!-- 10. 投稿ステータス -->
+    <!-- 7. 投稿ステータス -->
     <section id="status">
-      <h2>10. 投稿ステータスの確認</h2>
+      <h2>7. 投稿ステータスの確認</h2>
       <p>投稿の成功・失敗はカレンダー上で色分けして確認できます。</p>
 
       <table>
@@ -589,32 +512,45 @@
         </tbody>
       </table>
 
+      <p>また、投稿の成否に応じてイベントのタイトルに以下のタグが付与されます:</p>
+      <ul>
+        <li><code>[POSTED]</code> — 投稿成功</li>
+        <li><code>[FAILED]</code> — 投稿失敗</li>
+      </ul>
       <p>投稿が失敗した場合、予定の説明欄にエラーの詳細が追記されます。内容を確認し、問題を修正した上で新しい予定を作成し直してください。</p>
     </section>
 
-    <!-- 11. トラブルシューティング -->
+    <!-- 8. トラブルシューティング -->
     <section id="troubleshooting">
-      <h2>11. トラブルシューティング</h2>
+      <h2>8. トラブルシューティング</h2>
+
+      <div class="qa">
+        <h4>「🔗 Threads でログイン」ボタンが表示されない</h4>
+        <p>管理者が OAuth の設定（Client ID / Secret）を完了していない可能性があります。「トークンで連携」から手動で接続するか、管理者に連絡してください。</p>
+      </div>
+
+      <div class="qa">
+        <h4>トークンが無効ですと表示される</h4>
+        <p>以下を確認してください:<br>
+          ・トークンが正しくコピーされているか（前後にスペースが入っていないか）<br>
+          ・トークンの有効期限が切れていないか<br>
+          ・Threads テスターとして承認されているか（開発モードの場合）</p>
+      </div>
 
       <div class="qa">
         <h4>投稿が実行されない</h4>
         <p>以下を確認してください:<br>
           ・予定が「Threads投稿」カレンダーに作成されているか<br>
-          ・Add-on の設定でトークンが正しく保存されているか<br>
+          ・Add-on の設定でトークンが正しく保存されているか（設定画面で「✅ 接続済み」と表示されるか）<br>
           ・投稿トリガーが正常に動作しているか（GAS のトリガー一覧で確認）</p>
       </div>
 
       <div class="qa">
         <h4>画像・動画が添付されない</h4>
         <p>以下を確認してください:<br>
-          ・URL がインターネットから直接アクセス可能か<br>
-          ・URL が画像/動画ファイルに直接リンクしているか<br>
+          ・説明欄の書式が正しいか（例: <code>#image: https://...</code>）<br>
+          ・URL が https:// で始まるインターネットからアクセス可能な URL か<br>
           ・ファイルサイズが制限内か</p>
-      </div>
-
-      <div class="qa">
-        <h4>トークンエラーが表示される</h4>
-        <p>トークンが期限切れの可能性があります。<a href="#token">Section 4</a> の手順で新しいトークンを取得し、Add-on の設定画面で更新してください。</p>
       </div>
 
       <div class="qa">
@@ -623,22 +559,19 @@
       </div>
 
       <div class="qa">
-        <h4>「権限が必要です」と表示される</h4>
-        <p>Add-on の初回起動時に Google アカウントへのアクセス許可が求められます。「許可」をクリックしてください。セキュリティ警告が出る場合は「詳細」→「安全でないページに移動」をクリックしてください（自身のスクリプトのため安全です）。</p>
+        <h4>「アクセスをブロック」「Google の審査を完了していません」と表示される</h4>
+        <p>テストモードのアドオンを使用している場合に表示されることがあります。「詳細」→「安全でないページに移動」をクリックしてください（自身のスクリプトのため安全です）。または、管理者に GCP の OAuth 同意画面で「テストユーザー」として追加してもらってください。</p>
       </div>
 
       <div class="qa">
-        <h4>Add-on が表示されない</h4>
-        <p>以下を確認してください:<br>
-          ・GAS プロジェクトが正しくデプロイされているか<br>
-          ・テストデプロイで Google カレンダーを開いたか<br>
-          ・ブラウザを更新（再読み込み）してみてください</p>
+        <h4>「time-based トリガーの数が多すぎます」と表示される</h4>
+        <p>「保存して接続」を何度もクリックした場合に発生することがあります。Apps Script エディタでトリガー一覧を開き、不要なトリガーを手動で削除してください。または管理者が <code>removeAllTriggers()</code> 関数を実行することで一括削除できます。</p>
       </div>
     </section>
 
-    <!-- 12. 制限事項 -->
+    <!-- 9. 制限事項 -->
     <section id="limits">
-      <h2>12. 制限事項</h2>
+      <h2>9. 制限事項</h2>
       <table>
         <thead>
           <tr><th>制限</th><th>内容</th></tr>
@@ -653,9 +586,9 @@
       </table>
     </section>
 
-    <!-- 13. FAQ -->
+    <!-- 10. FAQ -->
     <section id="faq">
-      <h2>13. FAQ</h2>
+      <h2>10. FAQ</h2>
 
       <div class="qa">
         <h4>Q. 無料で使えますか？</h4>
@@ -684,7 +617,106 @@
 
       <div class="qa">
         <h4>Q. セットアップ代行では何をしてもらえますか？</h4>
-        <p>Meta アプリの作成、トークン取得、GAS のセットアップ、動作確認まで一括で代行します。30分のオンラインサポートも付属しています。詳しくは <a href="index.html#setup-service">プランページ</a> をご覧ください。</p>
+        <p>Add-on のインストール、Threads アカウントの連携、動作確認まで一括で代行します。オンラインサポートも付属しています。詳しくは <a href="index.html#setup-service">プランページ</a> をご覧ください。</p>
+      </div>
+    </section>
+
+    <!-- 11. 自分でホストする場合 -->
+    <section id="selfhost">
+      <h2>11. 自分でホストする場合（開発者向け）</h2>
+      <p>ソースコードをフォークして自分の環境で動かしたい開発者向けの手順です。一般利用者はこのセクションは不要です。</p>
+
+      <h3>11-1. Meta アプリの作成</h3>
+      <div class="step-box">
+        <h4>Step 1: Meta Developer に登録</h4>
+        <ol>
+          <li><a href="https://developers.facebook.com/" target="_blank" rel="noopener">Meta for Developers</a> にアクセス</li>
+          <li>Facebook アカウントでログイン</li>
+          <li>開発者アカウントの登録を完了する</li>
+        </ol>
+      </div>
+      <div class="step-box">
+        <h4>Step 2: 新しいアプリを作成</h4>
+        <ol>
+          <li>「マイアプリ」→「アプリを作成」をクリック</li>
+          <li>アプリ名を入力（例：<code>Threads Auto Poster</code>）</li>
+          <li>ユースケースは「その他」→ アプリタイプ「ビジネス」を選択</li>
+        </ol>
+      </div>
+      <div class="step-box">
+        <h4>Step 3: Threads API を追加</h4>
+        <ol>
+          <li>アプリのダッシュボード →「ユースケース」→「ユースケースを追加」</li>
+          <li>「Threads API にアクセス」を追加</li>
+        </ol>
+      </div>
+
+      <h3>11-2. GAS プロジェクトのセットアップ</h3>
+      <div class="step-box">
+        <h4>Step 1: コードをデプロイ</h4>
+        <ol>
+          <li><a href="https://github.com/takahasitoshiki/postThreads" target="_blank" rel="noopener">GitHub リポジトリ</a> をクローン</li>
+          <li><a href="https://script.google.com/" target="_blank" rel="noopener">Google Apps Script</a> で新しいプロジェクトを作成</li>
+          <li>コードをコピー＆ペースト、または <code>clasp push</code> でデプロイ</li>
+        </ol>
+      </div>
+      <div class="step-box">
+        <h4>Step 2: Script Properties を設定</h4>
+        <ol>
+          <li>Apps Script エディタで左の <strong>⚙ プロジェクトの設定</strong> を開く</li>
+          <li>「スクリプト プロパティ」で以下の 2 つを追加:</li>
+        </ol>
+        <table>
+          <thead>
+            <tr><th>プロパティ</th><th>値</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>THREADS_CLIENT_ID</code></td><td>Meta アプリの Threads app ID</td></tr>
+            <tr><td><code>THREADS_CLIENT_SECRET</code></td><td>Meta アプリの Threads app secret</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="step-box">
+        <h4>Step 3: Redirect URI を登録</h4>
+        <ol>
+          <li>Apps Script エディタで <code>initAdmin</code> 関数を実行</li>
+          <li>ログに表示される <strong>Redirect URI</strong> をコピー</li>
+          <li>Meta Developer Console →「Threads API」→「設定」→「Redirect Callback URLs」に貼り付けて保存</li>
+        </ol>
+      </div>
+      <div class="step-box">
+        <h4>Step 4: Threads テスターを追加（開発モードの場合）</h4>
+        <ol>
+          <li>Meta Developer Console →「アプリの役割」→「Threads テスター」</li>
+          <li>利用者の Threads ユーザー名を追加</li>
+          <li>追加された側が Threads アプリの設定 → 招待で承認</li>
+        </ol>
+      </div>
+      <div class="step-box">
+        <h4>Step 5: テスト実行</h4>
+        <ol>
+          <li>Apps Script エディタ →「デプロイ」→「デプロイをテスト」</li>
+          <li>Google カレンダーが開き、Add-on のテスト版がインストールされる</li>
+        </ol>
+      </div>
+
+      <div class="warning">
+        <p><strong>注意:</strong> Threads app secret は絶対に他人と共有しないでください。漏洩した場合は Meta Developer Console で直ちにリセットしてください。</p>
+      </div>
+
+      <h3 id="selfhost-token">11-3. トークンを手動で取得する場合</h3>
+      <p>OAuth ログインを使わず、Meta Developer Console から直接トークンを取得する方法です。</p>
+      <div class="step-box">
+        <h4>Token Generator を使用</h4>
+        <ol>
+          <li>Meta Developer Console → 「Threads API」→ 「Threads トークンジェネレーター」</li>
+          <li>「Generate Token」をクリック</li>
+          <li>Threads アカウントでログインし、アクセスを許可</li>
+          <li>表示されたトークンをコピーし、Add-on の「トークンで連携」に貼り付け</li>
+        </ol>
+        <div class="tip">
+          <p><strong>ヒント:</strong> Token Generator で取得したトークンはそのまま使用できます。ユーザー ID は Add-on が自動で取得するため、手動で調べる必要はありません。</p>
+        </div>
       </div>
     </section>
 
