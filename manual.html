@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マニュアル — Threads Auto Poster</title>
+  <meta name="description" content="Threads Auto Poster のセットアップ手順と使い方を解説するマニュアルページです。">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555555;
+      --border: #e0e0e0;
+      --accent: #0a7cff;
+      --section-bg: #f8f9fa;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --code-bg: #f1f3f5;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0a;
+        --text: #e8e8e8;
+        --muted: #aaaaaa;
+        --border: #2a2a2a;
+        --accent: #4da6ff;
+        --section-bg: #151515;
+        --card-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        --code-bg: #1e1e1e;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .toc {
+      background: var(--section-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .toc h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    .toc ol {
+      padding-left: 1.2rem;
+    }
+    .toc li {
+      margin-bottom: 0.3rem;
+    }
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .toc a:hover { text-decoration: underline; }
+
+    section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    p, li {
+      margin-bottom: 0.6rem;
+    }
+    ol, ul {
+      padding-left: 1.5rem;
+    }
+
+    .step-box {
+      background: var(--section-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+    .step-box h4 {
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .important {
+      background: var(--section-bg);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .warning {
+      background: var(--section-bg);
+      border-left: 4px solid #e74c3c;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .tip {
+      background: var(--section-bg);
+      border-left: 4px solid #27ae60;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--section-bg);
+      font-weight: 600;
+    }
+
+    .screenshot-placeholder {
+      background: var(--section-bg);
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: var(--section-bg);
+      border-radius: 12px;
+    }
+    .flow-item {
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .flow-arrow {
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .qa {
+      background: var(--section-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 0.8rem 0;
+    }
+    .qa h4 {
+      margin-bottom: 0.4rem;
+    }
+    .qa p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Home</a>
+
+    <h1>Threads Auto Poster マニュアル</h1>
+    <p class="subtitle">セットアップから日常運用まで、すべての手順を解説します。</p>
+
+    <!-- 目次 -->
+    <div class="toc">
+      <h2>目次</h2>
+      <ol>
+        <li><a href="#overview">全体の流れ</a></li>
+        <li><a href="#prerequisites">事前に必要なもの</a></li>
+        <li><a href="#meta-app">Meta アプリの作成</a></li>
+        <li><a href="#token">Threads アクセストークンの取得</a></li>
+        <li><a href="#gas-setup">Google Apps Script のセットアップ</a></li>
+        <li><a href="#addon-setup">Add-on の初期設定</a></li>
+        <li><a href="#calendar">カレンダーの使い方</a></li>
+        <li><a href="#post-types">投稿タイプ別ガイド</a></li>
+        <li><a href="#token-management">トークン管理</a></li>
+        <li><a href="#status">投稿ステータスの確認</a></li>
+        <li><a href="#troubleshooting">トラブルシューティング</a></li>
+        <li><a href="#limits">制限事項</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. 全体の流れ -->
+    <section id="overview">
+      <h2>1. 全体の流れ</h2>
+      <p>Threads Auto Poster の仕組みは非常にシンプルです。Google カレンダーに予定を作成すると、その時刻に Threads へ自動で投稿されます。</p>
+
+      <div class="flow-diagram">
+        <div class="flow-item">Meta アプリ作成</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">トークン取得</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">GAS セットアップ</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">Add-on 設定</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">カレンダーで予約</div>
+      </div>
+
+      <div class="important">
+        <p><strong>所要時間の目安:</strong> 初回セットアップは約 30〜60分かかります。一度設定が完了すれば、日常の運用はカレンダーに予定を作成するだけです。</p>
+      </div>
+    </section>
+
+    <!-- 2. 事前に必要なもの -->
+    <section id="prerequisites">
+      <h2>2. 事前に必要なもの</h2>
+      <table>
+        <thead>
+          <tr><th>項目</th><th>説明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Google アカウント</td><td>Google カレンダーと Google Apps Script を使用します</td></tr>
+          <tr><td>Meta（Facebook）アカウント</td><td>Meta Developer に登録するために必要です</td></tr>
+          <tr><td>Threads アカウント</td><td>投稿先となるアカウントです</td></tr>
+          <tr><td>PC のブラウザ</td><td>セットアップ作業は PC から行ってください</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. Meta アプリの作成 -->
+    <section id="meta-app">
+      <h2>3. Meta アプリの作成</h2>
+      <p>Threads API を使用するには、Meta Developer Platform でアプリを作成する必要があります。</p>
+
+      <div class="step-box">
+        <h4>Step 1: Meta Developer に登録</h4>
+        <ol>
+          <li><a href="https://developers.facebook.com/" target="_blank" rel="noopener">Meta for Developers</a> にアクセス</li>
+          <li>Facebook アカウントでログイン</li>
+          <li>開発者アカウントの登録を完了する</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 2: 新しいアプリを作成</h4>
+        <ol>
+          <li>「マイアプリ」→「アプリを作成」をクリック</li>
+          <li>アプリ名を入力（例：<code>Threads Auto Poster</code>）</li>
+          <li>アプリの連絡先メールアドレスを入力</li>
+          <li>ユースケースは「その他」を選択</li>
+          <li>アプリタイプは「ビジネス」を選択</li>
+          <li>「アプリを作成」をクリック</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 3: Threads API を追加</h4>
+        <ol>
+          <li>アプリのダッシュボードを開く</li>
+          <li>「プロダクトを追加」セクションで「Threads API」を見つける</li>
+          <li>「設定」をクリックして追加</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 4: アプリの設定を確認</h4>
+        <ol>
+          <li>左メニューの「アプリの設定」→「ベーシック」を開く</li>
+          <li><strong>アプリ ID</strong> と <strong>app secret</strong> をメモしておく（トークン取得時に使用）</li>
+          <li>「Threads API」→「設定」でリダイレクト URI を設定:
+            <br><code>https://threads.net/</code>（任意の有効な URL）</li>
+        </ol>
+      </div>
+
+      <div class="warning">
+        <p><strong>注意:</strong> app secret は絶対に他人と共有しないでください。漏洩した場合は直ちにリセットしてください。</p>
+      </div>
+    </section>
+
+    <!-- 4. トークン取得 -->
+    <section id="token">
+      <h2>4. Threads アクセストークンの取得</h2>
+      <p>Threads API を利用するには、長期アクセストークンが必要です。以下の手順で取得します。</p>
+
+      <div class="step-box">
+        <h4>Step 1: 短期トークンを取得</h4>
+        <ol>
+          <li>Meta Developer ダッシュボードで「Threads API」→「Threads API explorer」を開く</li>
+          <li>「Generate Token」ボタンをクリック</li>
+          <li>Threads アカウントでログインし、アクセスを許可</li>
+          <li>表示された<strong>短期トークン</strong>をコピー</li>
+        </ol>
+        <div class="important">
+          <p><strong>注意:</strong> 短期トークンの有効期限は 1時間です。次のステップをすぐに実行してください。</p>
+        </div>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 2: 長期トークンに交換</h4>
+        <p>ブラウザのアドレスバーに以下の URL を入力して開きます（各値を置き換えてください）:</p>
+        <p style="word-break: break-all;"><code>https://graph.threads.net/access_token?grant_type=th_exchange_token&amp;client_secret={APP_SECRET}&amp;access_token={SHORT_LIVED_TOKEN}</code></p>
+        <ul>
+          <li><code>{APP_SECRET}</code> → Step 3-4 でメモした app secret</li>
+          <li><code>{SHORT_LIVED_TOKEN}</code> → Step 1 で取得した短期トークン</li>
+        </ul>
+        <p>JSON レスポンスに含まれる <code>access_token</code> の値が長期トークン（有効期限 60日）です。</p>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 3: ユーザー ID を確認</h4>
+        <p>長期トークンを使って以下の URL にアクセスします:</p>
+        <p style="word-break: break-all;"><code>https://graph.threads.net/v1.0/me?access_token={LONG_LIVED_TOKEN}</code></p>
+        <p>レスポンスに含まれる <code>id</code> の値がユーザー ID です。メモしておきます。</p>
+      </div>
+
+      <div class="tip">
+        <p><strong>ヒント:</strong> トークンとユーザー ID は Add-on の初期設定で入力します。安全な場所に保管してください。</p>
+      </div>
+    </section>
+
+    <!-- 5. GAS セットアップ -->
+    <section id="gas-setup">
+      <h2>5. Google Apps Script のセットアップ</h2>
+
+      <div class="step-box">
+        <h4>Step 1: リポジトリからコードを取得</h4>
+        <ol>
+          <li><a href="https://github.com/takahasitoshiki/postThreads" target="_blank" rel="noopener">GitHub リポジトリ</a> にアクセス</li>
+          <li>コードをダウンロードまたはクローン</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 2: Google Apps Script プロジェクトを作成</h4>
+        <ol>
+          <li><a href="https://script.google.com/" target="_blank" rel="noopener">Google Apps Script</a> にアクセス</li>
+          <li>「新しいプロジェクト」をクリック</li>
+          <li>プロジェクト名を <code>Threads Auto Poster</code> に変更</li>
+          <li>GitHub から取得したコードファイルをコピー＆ペースト</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 3: デプロイ</h4>
+        <ol>
+          <li>「デプロイ」→「新しいデプロイ」をクリック</li>
+          <li>種類は「アドオン」を選択</li>
+          <li>必要な情報を入力し、デプロイを実行</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 4: テスト実行</h4>
+        <ol>
+          <li>「デプロイ」→「デプロイをテスト」をクリック</li>
+          <li>Google カレンダーが開き、Add-on のテスト版がインストールされます</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. Add-on の初期設定 -->
+    <section id="addon-setup">
+      <h2>6. Add-on の初期設定</h2>
+
+      <div class="step-box">
+        <h4>Step 1: Add-on を開く</h4>
+        <ol>
+          <li>Google カレンダーを開く</li>
+          <li>右サイドバーに Threads Auto Poster のアイコンが表示される</li>
+          <li>アイコンをクリックして Add-on パネルを開く</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 2: トークンを設定</h4>
+        <ol>
+          <li>「接続する」または「設定」画面を開く</li>
+          <li><strong>ユーザー ID</strong>（Section 4 の Step 3 で取得した値）を入力</li>
+          <li><strong>アクセストークン</strong>（Section 4 の Step 2 で取得した長期トークン）を入力</li>
+          <li>「保存」をクリック</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 3: 投稿カレンダーの作成</h4>
+        <p>初回設定時に、<strong>「Threads投稿」</strong>という名前のカレンダーが自動的に作成されます。このカレンダーに予定を作成すると、Threads に自動投稿されます。</p>
+      </div>
+
+      <div class="step-box">
+        <h4>Step 4: トリガーの確認</h4>
+        <p>設定が完了すると、以下のトリガーが自動的に作成されます:</p>
+        <table>
+          <thead>
+            <tr><th>トリガー</th><th>機能</th><th>間隔</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>投稿チェック</td><td>カレンダーの予定を確認し、投稿を実行</td><td>定期的</td></tr>
+            <tr><td>トークンリフレッシュ</td><td>アクセストークンを自動更新</td><td>45日ごと</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. カレンダーの使い方 -->
+    <section id="calendar">
+      <h2>7. カレンダーの使い方</h2>
+
+      <h3>基本的な操作</h3>
+      <ol>
+        <li>Google カレンダーを開く</li>
+        <li>投稿したい日時に新しい予定を作成</li>
+        <li>カレンダーを <strong>「Threads投稿」</strong> に切り替える</li>
+        <li>予定の<strong>タイトル</strong>に投稿したいテキストを入力</li>
+        <li>予定を保存する</li>
+      </ol>
+
+      <div class="important">
+        <p><strong>重要:</strong> 必ず「Threads投稿」カレンダーに予定を作成してください。他のカレンダーの予定は投稿されません。</p>
+      </div>
+
+      <h3>予定の各フィールドの役割</h3>
+      <table>
+        <thead>
+          <tr><th>フィールド</th><th>用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>タイトル</td><td>投稿テキスト（Threads に表示されるテキスト）</td></tr>
+          <tr><td>開始時刻</td><td>投稿が実行される時刻</td></tr>
+          <tr><td>説明欄</td><td>メディア URL（画像・動画を添付する場合）</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tip">
+        <p><strong>ヒント:</strong> スマホの Google カレンダーアプリからも予定を作成できます。外出先からでも投稿を予約できます。</p>
+      </div>
+    </section>
+
+    <!-- 8. 投稿タイプ別ガイド -->
+    <section id="post-types">
+      <h2>8. 投稿タイプ別ガイド</h2>
+
+      <div class="step-box">
+        <h4>テキストのみの投稿</h4>
+        <ul>
+          <li><strong>タイトル:</strong> 投稿したいテキストを入力</li>
+          <li><strong>説明欄:</strong> 空のまま</li>
+        </ul>
+        <p>例: タイトルに <code>今日は天気がいいですね！ #threads</code> と入力</p>
+      </div>
+
+      <div class="step-box">
+        <h4>画像付き投稿</h4>
+        <ul>
+          <li><strong>タイトル:</strong> 投稿テキスト</li>
+          <li><strong>説明欄:</strong> 画像の URL を記入</li>
+        </ul>
+        <p>例: 説明欄に <code>https://example.com/photo.jpg</code> と入力</p>
+        <div class="warning">
+          <p><strong>注意:</strong> 画像 URL はインターネットから直接アクセス可能な URL である必要があります。Google ドライブの限定共有リンクなどは使用できません。</p>
+        </div>
+      </div>
+
+      <div class="step-box">
+        <h4>動画付き投稿</h4>
+        <ul>
+          <li><strong>タイトル:</strong> 投稿テキスト</li>
+          <li><strong>説明欄:</strong> 動画の URL を記入</li>
+        </ul>
+        <p>動画は自動的に判定されます。対応形式: MP4, MOV など。</p>
+      </div>
+
+      <h3>メディア投稿の注意点</h3>
+      <table>
+        <thead>
+          <tr><th>項目</th><th>制限</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>画像形式</td><td>JPEG, PNG（推奨: 1080x1080px 以上）</td></tr>
+          <tr><td>画像サイズ</td><td>最大 8MB</td></tr>
+          <tr><td>動画形式</td><td>MP4, MOV</td></tr>
+          <tr><td>動画の長さ</td><td>最大 5分</td></tr>
+          <tr><td>動画サイズ</td><td>最大 100MB</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 9. トークン管理 -->
+    <section id="token-management">
+      <h2>9. トークン管理</h2>
+      <p>Threads のアクセストークンは有効期限が <strong>60日間</strong> です。本ツールでは安全マージンを取って <strong>45日経過時</strong> に自動リフレッシュを行います。</p>
+
+      <h3>自動リフレッシュの仕組み</h3>
+      <div class="flow-diagram">
+        <div class="flow-item">トークン保存</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">45日後に自動更新</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">新トークンで上書き</div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-item">45日後にまた更新…</div>
+      </div>
+
+      <h3>トークンが期限切れになった場合</h3>
+      <p>万が一トークンが期限切れになった場合は、メールで通知が届きます。通知を受け取ったら、以下の手順でトークンを再取得してください:</p>
+      <ol>
+        <li><a href="#token">Section 4</a> の手順に従い、新しいトークンを取得</li>
+        <li>Add-on の設定画面を開き、新しいトークンを入力して保存</li>
+      </ol>
+
+      <div class="tip">
+        <p><strong>ヒント:</strong> 通常は自動リフレッシュにより手動での更新は不要です。メール通知が届かなければ正常に動作しています。</p>
+      </div>
+    </section>
+
+    <!-- 10. 投稿ステータス -->
+    <section id="status">
+      <h2>10. 投稿ステータスの確認</h2>
+      <p>投稿の成功・失敗はカレンダー上で色分けして確認できます。</p>
+
+      <table>
+        <thead>
+          <tr><th>色</th><th>ステータス</th><th>説明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="color: #27ae60; font-weight: 700;">&#9632; 緑</td><td>成功</td><td>Threads への投稿が正常に完了しました</td></tr>
+          <tr><td style="color: #e74c3c; font-weight: 700;">&#9632; 赤</td><td>失敗</td><td>投稿中にエラーが発生しました</td></tr>
+          <tr><td style="color: var(--muted); font-weight: 700;">&#9632; デフォルト</td><td>未処理</td><td>まだ投稿時刻が来ていません</td></tr>
+        </tbody>
+      </table>
+
+      <p>投稿が失敗した場合、予定の説明欄にエラーの詳細が追記されます。内容を確認し、問題を修正した上で新しい予定を作成し直してください。</p>
+    </section>
+
+    <!-- 11. トラブルシューティング -->
+    <section id="troubleshooting">
+      <h2>11. トラブルシューティング</h2>
+
+      <div class="qa">
+        <h4>投稿が実行されない</h4>
+        <p>以下を確認してください:<br>
+          ・予定が「Threads投稿」カレンダーに作成されているか<br>
+          ・Add-on の設定でトークンが正しく保存されているか<br>
+          ・投稿トリガーが正常に動作しているか（GAS のトリガー一覧で確認）</p>
+      </div>
+
+      <div class="qa">
+        <h4>画像・動画が添付されない</h4>
+        <p>以下を確認してください:<br>
+          ・URL がインターネットから直接アクセス可能か<br>
+          ・URL が画像/動画ファイルに直接リンクしているか<br>
+          ・ファイルサイズが制限内か</p>
+      </div>
+
+      <div class="qa">
+        <h4>トークンエラーが表示される</h4>
+        <p>トークンが期限切れの可能性があります。<a href="#token">Section 4</a> の手順で新しいトークンを取得し、Add-on の設定画面で更新してください。</p>
+      </div>
+
+      <div class="qa">
+        <h4>投稿時刻がずれる</h4>
+        <p>Google Apps Script のトリガーは仕様上、最大 ±15分の誤差が生じます。これは Google 側の制限であり、回避できません。正確な時刻に投稿したい場合は、余裕を持った時刻設定をおすすめします。</p>
+      </div>
+
+      <div class="qa">
+        <h4>「権限が必要です」と表示される</h4>
+        <p>Add-on の初回起動時に Google アカウントへのアクセス許可が求められます。「許可」をクリックしてください。セキュリティ警告が出る場合は「詳細」→「安全でないページに移動」をクリックしてください（自身のスクリプトのため安全です）。</p>
+      </div>
+
+      <div class="qa">
+        <h4>Add-on が表示されない</h4>
+        <p>以下を確認してください:<br>
+          ・GAS プロジェクトが正しくデプロイされているか<br>
+          ・テストデプロイで Google カレンダーを開いたか<br>
+          ・ブラウザを更新（再読み込み）してみてください</p>
+      </div>
+    </section>
+
+    <!-- 12. 制限事項 -->
+    <section id="limits">
+      <h2>12. 制限事項</h2>
+      <table>
+        <thead>
+          <tr><th>制限</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Threads API 投稿上限</td><td>24時間あたり最大 250件</td></tr>
+          <tr><td>投稿時刻の精度</td><td>最大 ±15分の誤差（GAS トリガーの仕様）</td></tr>
+          <tr><td>テキストの長さ</td><td>Threads の投稿文字数制限に準拠（500文字）</td></tr>
+          <tr><td>トークンの有効期限</td><td>60日間（45日で自動リフレッシュ）</td></tr>
+          <tr><td>GAS 実行時間</td><td>1回のスクリプト実行: 最大 6分</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 13. FAQ -->
+    <section id="faq">
+      <h2>13. FAQ</h2>
+
+      <div class="qa">
+        <h4>Q. 無料で使えますか？</h4>
+        <p>はい。ソースコードは GitHub で公開されており、すべての機能を無料で利用できます。セットアップが難しい場合のみ、有料のセットアップ代行サービスをご利用いただけます。</p>
+      </div>
+
+      <div class="qa">
+        <h4>Q. 複数の Threads アカウントに投稿できますか？</h4>
+        <p>1つの Add-on インストールにつき 1アカウントです。複数のアカウントに投稿したい場合は、別の Google アカウントでセットアップしてください。</p>
+      </div>
+
+      <div class="qa">
+        <h4>Q. データはどこに保存されますか？</h4>
+        <p>すべてのデータ（トークン、ユーザー ID など）は Google Apps Script の UserProperties にのみ保存されます。外部サーバーやデータベースには一切送信されません。</p>
+      </div>
+
+      <div class="qa">
+        <h4>Q. スマホだけでセットアップできますか？</h4>
+        <p>初回セットアップには PC のブラウザが必要です。セットアップ完了後は、スマホの Google カレンダーアプリから投稿を予約できます。</p>
+      </div>
+
+      <div class="qa">
+        <h4>Q. 投稿を取り消したいときは？</h4>
+        <p>投稿時刻より前にカレンダーの予定を削除すれば、投稿は実行されません。投稿済みのものは Threads アプリから手動で削除してください。</p>
+      </div>
+
+      <div class="qa">
+        <h4>Q. セットアップ代行では何をしてもらえますか？</h4>
+        <p>Meta アプリの作成、トークン取得、GAS のセットアップ、動作確認まで一括で代行します。30分のオンラインサポートも付属しています。詳しくは <a href="index.html#setup-service">プランページ</a> をご覧ください。</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Threads Auto Poster. All rights reserved.</p>
+      <p>
+        <a href="index.html">Home</a> &middot;
+        <a href="privacy-policy.html">プライバシーポリシー</a> &middot;
+        <a href="terms-of-service.html">利用規約</a> &middot;
+        <a href="data-deletion.html">データ削除</a> &middot;
+        <a href="https://github.com/takahasitoshiki/postThreads">GitHub</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
